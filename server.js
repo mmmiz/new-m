@@ -27,8 +27,8 @@ mongoose.connect(process.env.MONGO_DB_URL
 });
 
 app.use(cors({
-  // origin: 'http://localhost:3001/',
-  origin: 'https://new-mycolors.onrender.com/',
+  origin: 'http://localhost:3001',
+  // origin: 'https://new-mycolors.onrender.com/',
   // "proxy": "https://new-mycolors-api.onrender.com/api",
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
@@ -43,16 +43,16 @@ app.use("/api/colors", colorRoute);
 app.use("/api/users", userRoute);
 
 
-// let serverMessage = 'Hello from the server!';
-// app.get('/api/message', (req, res) => {
-//   res.json({ message: serverMessage });
-// });
+let serverMessage = 'Hello from the server!';
+app.get('/api/message', (req, res) => {
+  res.json({ message: serverMessage });
+});
 
-// app.post('/api/message', (req, res) => {
-//   const { message } = req.body;
-//   serverMessage = message;
-//   res.json({ message: serverMessage });
-// });
+app.post('/api/message', (req, res) => {
+  const { message } = req.body;
+  serverMessage = message;
+  res.json({ message: serverMessage });
+});
 
 // Serve static files from the 'build' directory
 app.use(express.static(path.join(__dirname, 'build')));
