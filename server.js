@@ -58,9 +58,18 @@ app.post('/api/message', (req, res) => {
 app.use(express.static(path.join(__dirname, 'build')));
 
 // Catch-all route to serve the 'index.html' file
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
+
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/public/index.html'), function (err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
