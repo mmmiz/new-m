@@ -42,11 +42,11 @@ router.post("/login", async (req, res) => {
       { userId: user._id, 
         email: user.email, 
         username: user.username }, SECRET_KEY,
-      { expiresIn: '1h' }
+      // { expiresIn: '1h' }
     );
     res.cookie('accessToken', token, { httpOnly: true });
-
     res.status(200).json({ user, token });
+    console.log('success');
   } catch (err) {
     console.error(err);
     res.status(500).json(err.message);
