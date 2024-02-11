@@ -27,9 +27,17 @@ router.post('/', async (req, res) => {
 // GET all palettes
 router.get('/', async(req, res) => {
   try {
-    const colors = await Colors.find()
-    res.json(colors);
-    // console.log(colors);
+    const page = parseInt(req.query.page) || 1;
+    const perPage = parseInt(req.query.perPage) || 5;
+
+    const skip = (page - 1) * perPage;
+
+    const colors = await Colors.find().skip(skip).limit(perPage);
+    const totalCount = await Colors.countDocuments(); // or count()
+    const totalPages = Math.ceil(totalCount/perPage);
+
+    res.json({colors, totalPages});
+    // console.log({colors, totalPages});
 } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal Server Error' });
