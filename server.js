@@ -28,8 +28,8 @@ mongoose.connect(process.env.MONGO_DB_URL
 
 app.use(cors({
   // origin: 'http://localhost:3001',
-  origin: 'https://new-mycolors.onrender.com',
   // "proxy": "https://new-mycolors-api.onrender.com/api",
+  origin: 'https://new-mycolors.onrender.com',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));

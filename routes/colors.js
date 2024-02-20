@@ -44,6 +44,30 @@ router.get('/', async(req, res) => {
 }
 })
 
+// GET all Each Category 
+// router.get('/category', async (req, res) => {
+//   try {
+//     const filterColors = await Colors.find({ colorCategory: { $ne: [] } });
+//     res.json(filterColors);
+//   } catch (error) {
+//     console.error('Error fetching colors by category:', error);
+//     res.status(500).json({ error: 'Internal Server Error' });
+//   }
+// });
+
+router.get('/category', async (req, res) => {
+  try {
+    const colorCategory = req.query.colorCategory; // Extract colorCategory from query parameters
+    const filterColors = await Colors.find({ colorCategory: colorCategory });
+    res.json(filterColors);
+  } catch (error) {
+    console.error('Error fetching colors by category:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
+
 
 // GET My colors
 router.get('/mycolors/:userId', async (req, res) => {
@@ -64,6 +88,8 @@ router.get('/my-liked-colors/:userId', async (req, res) => {
   try {
     const userId = req.params.userId; 
     const likedColors = await Colors.find({ likes: { $in: [userId] } });
+    // const likedColors = await Colors.find({ likes: userId });
+
         // console.log(likedColors);
 
     res.status(200).json(likedColors);

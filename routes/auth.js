@@ -41,8 +41,10 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign(
       { userId: user._id, 
         email: user.email, 
-        username: user.username }, SECRET_KEY,
-      // { expiresIn: '1h' }
+        username: user.username 
+      }, 
+      SECRET_KEY,
+      { expiresIn: '1h' }
     );
     res.cookie('accessToken', token, { httpOnly: true });
     res.status(200).json({ user, token });
